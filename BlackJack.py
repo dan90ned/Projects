@@ -254,90 +254,91 @@ def print_credit():  # print credit func
     print()
 
 
-# set players
-player1 = Player('Player 1')
-pc = Player('Computer')
+if __name__ == '__main__':
+    # set players
+    player1 = Player('Player 1')
+    pc = Player('Computer')
 
-# execution
-print_credit()
-while True:  # game loop (play again func)
-    if len(used_deck) >= 10:  # shuffle deck if card are less then 10
-        pass
-    else:
-        used_deck = a.shuffle_deck()
-
-    # game start
-    winner = 0
-
-    bet()
-
-    player1.f_deal()  # deal cards
-    pc.f_deal()
-
-    print(f'{player1.name} cards:   {player1}')
-    print(f'{pc.name} cards: [ {list(pc)[0]},   --]')
-    print()
-
-    # start check player cards
-    if len(player1) == 2:
-        if check_bj(player1)[1]:
+    # execution
+    print_credit()
+    while True:  # game loop (play again func)
+        if len(used_deck) >= 10:  # shuffle deck if card are less then 10
             pass
         else:
-            winner = 1
+            used_deck = a.shuffle_deck()
 
-    print_sum_cards(player1)
+        # game start
+        winner = 0
 
-    while check_total(player1) == 1:  # loop for hit/stand
-        if hit_stand_in():
+        bet()
 
-            print('----------------------')
-            print(f'{player1.name} cards:   {player1}')
-            print(f'{pc.name} cards: [ {list(pc)[0]},   --]')
-            print()
+        player1.f_deal()  # deal cards
+        pc.f_deal()
 
-            print_sum_cards(player1)
+        print(f'{player1.name} cards:   {player1}')
+        print(f'{pc.name} cards: [ {list(pc)[0]},   --]')
+        print()
 
-            if check_total(player1) == 1:
+        # start check player cards
+        if len(player1) == 2:
+            if check_bj(player1)[1]:
                 pass
+            else:
+                winner = 1
 
-            elif check_total(player1) == 2:
-                winner = 2
-                print('Bust! You lost!')
+        print_sum_cards(player1)
+
+        while check_total(player1) == 1:  # loop for hit/stand
+            if hit_stand_in():
+
+                print('----------------------')
+                print(f'{player1.name} cards:   {player1}')
+                print(f'{pc.name} cards: [ {list(pc)[0]},   --]')
+                print()
+
+                print_sum_cards(player1)
+
+                if check_total(player1) == 1:
+                    pass
+
+                elif check_total(player1) == 2:
+                    winner = 2
+                    print('Bust! You lost!')
+                    break
+
+                elif check_total(player1) == 3:
+                    break
+            else:
                 break
 
-            elif check_total(player1) == 3:
-                break
+        if check_total(player1) in (1, 3) and check_bj(player1)[1]:  # computer loop
+            print('----------------------')
+            print(f'{pc.name} cards: {pc}')
+            check_bj(pc)
+            print_sum_cards(pc)
+            while check_a(pc)[1] < 17:
+                print('----------------------')
+                pc.next_deal()
+                print(f'{pc.name} cards: {pc}')
+
+                print_sum_cards(pc)
+
+            else:
+                if check_a(pc)[1] > 21:
+                    winner = 1
+                    print(f'{pc.name} Bust! \n'
+                          f'{player1.name} wins!')
+                else:
+                    print_sum_cards(player1)
+                    check_winner(player1, pc)
+
+        pay_winner()
+
+        print_credit()
+
+        if check_play_again():
+            print('*****************************')
+            player1.clear_cards()
+            pc.clear_cards()
         else:
             break
-
-    if check_total(player1) in (1, 3) and check_bj(player1)[1]:  # computer loop
-        print('----------------------')
-        print(f'{pc.name} cards: {pc}')
-        check_bj(pc)
-        print_sum_cards(pc)
-        while check_a(pc)[1] < 17:
-            print('----------------------')
-            pc.next_deal()
-            print(f'{pc.name} cards: {pc}')
-
-            print_sum_cards(pc)
-
-        else:
-            if check_a(pc)[1] > 21:
-                winner = 1
-                print(f'{pc.name} Bust! \n'
-                      f'{player1.name} wins!')
-            else:
-                print_sum_cards(player1)
-                check_winner(player1, pc)
-
-    pay_winner()
-
-    print_credit()
-
-    if check_play_again():
-        print('*****************************')
-        player1.clear_cards()
-        pc.clear_cards()
-    else:
-        break

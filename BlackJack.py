@@ -227,10 +227,10 @@ def bet():  # bet func
         try:
             bet_amount = int(input('Please place your bet: '.strip()).upper())
 
-            if bet_amount <= player1.balance:
+            if player1.balance >= bet_amount > 0:
                 pass
             else:
-                bet_amount = int(input('Please place your bet: '.strip()).upper())
+                bet()
             break
         except ValueError:
             pass

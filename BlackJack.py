@@ -245,13 +245,23 @@ def pay_winner():  # pay winner func after the game is end
         player1.loose(bet_amount)
 
 
+def output_handle(printed_arg):
+    print(printed_arg)
+
+
+def print_first_hand():
+    return f'{player1.name} cards:   {player1} \n'\
+           f'{pc.name} cards: [ {list(pc)[0]},   --] \n'\
+           '\n'
+
+
 def print_credit():  # print credit func
-    print()
-    print('$$$$$$$$$$$$$$$$$$$$$')
-    print(f'{player1.name} credit: {player1.balance}')
-    print(f'{pc.name} credit: {pc.balance}')
-    print('$$$$$$$$$$$$$$$$$$$$$')
-    print()
+    return '\n' \
+           '$$$$$$$$$$$$$$$$$$$$$ \n' \
+           f'{player1.name} credit: {player1.balance} \n' \
+           f'{pc.name} credit: {pc.balance} \n' \
+           '$$$$$$$$$$$$$$$$$$$$$ \n' \
+            '\n'
 
 
 if __name__ == '__main__':
@@ -260,7 +270,7 @@ if __name__ == '__main__':
     pc = Player('Computer')
 
     # execution
-    print_credit()
+    output_handle(print_credit())
     while True:  # game loop (play again func)
         if len(used_deck) >= 10:  # shuffle deck if card are less then 10
             pass
@@ -275,9 +285,7 @@ if __name__ == '__main__':
         player1.f_deal()  # deal cards
         pc.f_deal()
 
-        print(f'{player1.name} cards:   {player1}')
-        print(f'{pc.name} cards: [ {list(pc)[0]},   --]')
-        print()
+        output_handle(print_first_hand())
 
         # start check player cards
         if len(player1) == 2:
@@ -334,7 +342,7 @@ if __name__ == '__main__':
 
         pay_winner()
 
-        print_credit()
+        output_handle(print_credit())
 
         if check_play_again():
             print('*****************************')

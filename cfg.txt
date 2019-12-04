@@ -1,0 +1,2 @@
+Player1:500
+Computer:500

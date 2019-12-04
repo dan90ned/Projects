@@ -37,7 +37,7 @@ used_deck = a.shuffle_deck()  # the shuffled deck used in game
 
 
 class Player:  # used to define players
-    def __init__(self, name, balance=500):
+    def __init__(self, name, balance):
         self.hand = []
         self.name = name
         self.balance = balance
@@ -264,10 +264,18 @@ def print_credit():  # print credit func
             '\n'
 
 
+with open('cfg.txt') as f:
+    d = {}
+    for line in f:
+        k, v = line.split(':')
+        d[k] = int(v)
+k_list = [k for k in d]
+
+
 if __name__ == '__main__':
     # set players
-    player1 = Player('Player 1')
-    pc = Player('Computer')
+    player1 = Player(k_list[0], d[k_list[0]])
+    pc = Player(k_list[1], d[k_list[1]])
 
     # execution
     output_handle(print_credit())

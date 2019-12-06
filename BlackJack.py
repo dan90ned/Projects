@@ -223,16 +223,16 @@ def check_play_again():  # check if player want to play again
 bet_amount = 0
 
 
-def bet():  # bet func
+def bet(balance):  # bet func
     global bet_amount
     while True:
         try:
             bet_amount = int(input_handle('Please place your bet: ').strip().upper())
 
-            if player1.balance >= bet_amount > 0:
+            if balance >= bet_amount > 0:
                 return bet_amount
             else:
-                bet()
+                bet(balance)
             break
         except ValueError:
             pass
@@ -299,7 +299,7 @@ if __name__ == '__main__':
         winner = 0
         clear_screen()
         output_handle(print_credit())
-        bet()
+        bet(player1.balance)
 
         player1.f_deal()  # deal cards
         pc.f_deal()

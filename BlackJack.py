@@ -236,6 +236,7 @@ def bet(balance):  # bet func
             break
         except ValueError:
             pass
+    return bet_amount
 
 
 def pay_winner():  # pay winner func after the game is end
